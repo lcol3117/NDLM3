@@ -32,7 +32,7 @@ fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: f
     .iter()
     .map(|&x| {*x})
     .collect::<Vec<Vec<f64>>>();
-  acceptpts.len() > regionpts.len() / 3
+  acceptpts.len() => regionpts.len() / 3
 }
 
 fn l2d_not_self(a: Vec<f64>, b: Vec<f64>) -> f64 {
