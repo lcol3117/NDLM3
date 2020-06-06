@@ -18,7 +18,7 @@ fn get_nd(point: Vec<f64>, data: Vec<Vec<f64>>) -> f64 {
 }
 
 fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: f64) -> bool {
-  
+  let regionpts: Vec<Vec<f64>> = filter
 }
 
 fn l2d_not_self(a: Vec<f64>, b: Vec<f64>) -> f64 {
