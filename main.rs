@@ -17,7 +17,9 @@ fn get_nd(point: Vec<f64>, data: Vec<Vec<f64>>) -> f64 {
   f64min(options)
 }
 
-fn 
+fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: f64) -> bool {
+  
+}
 
 fn l2d_not_self(a: Vec<f64>, b: Vec<f64>) -> f64 {
   let orig_l2dist: f64 = l2d(a,b)
