@@ -35,8 +35,10 @@ fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: f
   acceptpts.len() >= regionpts.len() / 3
 }
 
-fn in_region(a: &Vec<f64>, b: &Vec<f64>, eta: f64, point: Vec<f64>) -> bool {
-  
+fn in_region(slice_a: &Vec<f64>, slice_b: &Vec<f64>, eta: f64, point: Vec<f64>) -> bool {
+  let a: Vec<f64> = slice_a.clone().to_vec()
+  let b: vec<f64> = slice_b.clone().to_vec()
+  let withinx: bool = point[0]
 }
 
 fn l2d_not_self(a: Vec<f64>, b: Vec<f64>) -> f64 {
