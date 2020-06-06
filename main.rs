@@ -1,3 +1,8 @@
+extern crate zipWith;
+
+use zipWith::IntoZipWith;
+use std::iter::Iterator;
+
 fn main() {
   println!("Hello World!");
 }
@@ -25,7 +30,7 @@ fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: f
     .iter()
     .map(|&x| {*x})
     .collect::<Vec<Vec<f64>>>();
-  let acceptpts: Vec<Vec<f64>> = regionpts
+  let acceptpts: Vec<Vec<f64>> = &regionpts
     .iter()
     .filter(|&x| {crossing_density(&a,&b,&ndt,&data,(*x).clone().to_vec())})
     .collect::<Vec<&Vec<f64>>>()
@@ -38,12 +43,13 @@ fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: f
 fn in_region(slice_a: &Vec<f64>, slice_b: &Vec<f64>, eta: f64, point: Vec<f64>) -> bool {
   let a: Vec<f64> = slice_a.clone().to_vec()
   let b: Vec<f64> = slice_b.clone().to_vec()
-  let xs: Vec<f64> = a
+  let in_dim_list: Vec<bool> = (0..point.len())
     .iter()
-    .zip(b.iter())
-    .into_iter()
-    .collect::<>
-  let withinx: bool = point[0] < f64min()
+    .map(|x| {(a[x] < point[x]) && (point[x] < b[x])})
+    .collect::<Vec<bool>>();
+  let within_dims: bool = in_dim_list
+    .iter()
+    .fold(|a,x| {a && *x})
 }
 
 fn l2d_not_self(a: Vec<f64>, b: Vec<f64>) -> f64 {
