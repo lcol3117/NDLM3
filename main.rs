@@ -20,18 +20,19 @@ fn get_nd(point: Vec<f64>, data: Vec<Vec<f64>>) -> f64 {
 fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: f64) -> bool {
   let regionpts: Vec<Vec<f64>> = data
     .iter()
-    .filter(|&x| {in_region(a,b,eta,(*x).clone())})
+    .filter(|&x| {in_region(&a,&b,eta,(*x).clone())})
     .collect::<Vec<&Vec<f64>>>()
     .iter()
     .map(|&x| {*x})
     .collect::<Vec<Vec<f64>>>();
   let acceptpts: Vec<Vec<f64>> = regionpts
     .iter()
-    .filter(|&x| {})
+    .filter(|&x| {crossing_density(&a,&b,&ndt,&data,(*x).clone())})
     .collect::<Vec<&Vec<f64>>>()
     .iter()
     .map(|&x| {*x})
     .collect::<Vec<Vec<f64>>>();
+  
 }
 
 fn l2d_not_self(a: Vec<f64>, b: Vec<f64>) -> f64 {
