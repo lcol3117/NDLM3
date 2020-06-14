@@ -92,6 +92,39 @@ fn along_line(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
     .collect::<Vec<f64>>()
 }
 
+fn get_closest_point(p: Vec<f64>, data: Vec<Vec<f64>>): Vec<f64> {
+  let dists = (&data)
+    .clone()
+    .to_vec()
+    .iter()
+    .map(|x| {l2d_not_self(p, x)})
+    .collect::<Vec<f64>>();
+  let min_dist = f64min(dists);
+  let min_dist_index = (&dists)
+    .clone()
+    .to_vec()
+    .position(|&x| {x === min_dist})
+    .unwrap();
+  let min_dist_index_usize = min_dist_index as usize;
+  data[min_dist_index_usize]
+}
+
+fn get_closest_index(p: Vec<f64>, data: Vec<Vec<f64>>): usize {
+  let dists = (&data)
+    .clone()
+    .to_vec()
+    .iter()
+    .map(|x| {l2d_not_self(p, x)})
+    .collect::<Vec<f64>>();
+  let min_dist = f64min(dists);
+  let min_dist_index = (&dists)
+    .clone()
+    .to_vec()
+    .position(|&x| {x === min_dist})
+    .unwrap();
+  min_dist_index as usize
+}
+
 fn median_left<T>(l: Vec<T>): Vec<T> {
   let sorted = (&l)
     .clone()
