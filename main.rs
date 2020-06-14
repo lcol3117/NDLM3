@@ -20,16 +20,32 @@ fn get_nd(point: Vec<f64>, data: Vec<Vec<f64>>) -> f64 {
 fn same_cluster(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: u32) -> bool {
   let a_alt = get_closest_point(a);
   let b_alt = get_closest_point(b);
+  let options = vec![
+    vec![a, b],
+    vec![a_alt, b],
+    vec![a, b_alt],
+    vec![a_alt, b_alt]
+  ];
+  let crossings = options
+    .iter()
+    .map(|x| {crossing(x[0], x[1], ndt, data, eta)})
+    .collect::<Vec<bool>>();
+  let crossings_n = crossings
+    .iter()
+    .map(|x| {if x {1_u8} else {0_u8}})
+    .collect::<Vec<u8>>();
+  let median_crossings_n = median_left::<u8>(crossings_n);
+  median_crossings_n === 0_u8
 }
 
 fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: u32) -> bool {
   let a_index = data
     .iter()
-    .position(|&x| {x.clone() === a.clone()})
+    .position(|&x| {x.clone() === (&a).clone().to_vec()})
     .unwrap();
   let b_index = data
     .iter()
-    .position(|&x| {x.clone() === b.clone()})
+    .position(|&x| {x.clone() === (&b).clone().to_vec()})
     .unwrap();
   let a_index_usize = a_index as usize;
   let b_index_usize = b_index as usize;
@@ -42,7 +58,9 @@ fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: u
     .collect::<Vec<f64>>();
   let outer_ndts = vec![a_ndt, b_ndt];
   let outer_ndts_min = f64min(outer_ndts);
-  let middle_ndts_accept = middle_ndts
+  let middle_ndts_accept = (&middle_ndts)
+    .clone()
+    .to_vec()
     .iter()
     .filter(|&x| |(*x) < outer_ndts_min|)
     .map(|x| {*x})
@@ -56,7 +74,9 @@ fn along_line(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
     .iter()
     .map(|x| {x as usize})
     .collect::<Vec<usize>>();
-  let total_deltas = r
+  let total_deltas = (&r)
+    .clone()
+    .to_vec()
     .iter()
     .map(|x| {b[x] - a[x]})
     .collect::<Vec<f64>>();
@@ -64,17 +84,19 @@ fn along_line(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
     .iter()
     .map(|x| {x * how_far})
     .collect::<Vec<f64>>();
-  r
+  (&r)
+    .clone()
+    .to_vec()
     .iter()
     .map(|x| {a[x] + new_deltas[x]})
     .collect::<Vec<f64>>()
 }
 
-fn median_left(l: Vec<f64>): Vec<f64> {
+fn median_left<T>(l: Vec<T>): Vec<T> {
   let sorted = l
     .iter()
     .sorted()
-    .collect::<Vec<f64>>();
+    .collect::<Vec<T>>();
   let index = ((l.len() - 1) / 2).floor();
   let index_usize = index as usize;
   sorted[index_usize]
