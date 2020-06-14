@@ -93,7 +93,9 @@ fn along_line(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
 }
 
 fn median_left<T>(l: Vec<T>): Vec<T> {
-  let sorted = l
+  let sorted = (&l)
+    .clone()
+    .to_vec()
     .iter()
     .sorted()
     .collect::<Vec<T>>();
