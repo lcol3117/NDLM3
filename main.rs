@@ -31,9 +31,14 @@ fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: u
   let a_ndt = ndt[a_index_usize];
   let b_ndt = ndt[b_index_usize];
   let eta_range = 0_f64..((eta as f64) - 1_f64);
+  let middle_ndts = eta_range
+    .iter()
+    .map(|x| {ndt[get_closest_index(along_line(a, b, x / eta), data) as usize]})
+    .collect::<Vec<f64>>();
+  
 }
 
-fn alongLine(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
+fn along_line(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
   let r = 0..a.length()
     .iter()
     .map(|x| {x as usize})
@@ -52,7 +57,7 @@ fn alongLine(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
     .collect::<Vec<f64>>()
 }
 
-fn medianLeft(l: Vec<f64>): Vec<f64> {
+fn median_left(l: Vec<f64>): Vec<f64> {
   let sorted = l
     .iter()
     .sorted()
