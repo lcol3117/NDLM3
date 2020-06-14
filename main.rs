@@ -35,7 +35,8 @@ fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: u
     .iter()
     .map(|x| {ndt[get_closest_index(along_line(a, b, x / eta), data) as usize]})
     .collect::<Vec<f64>>();
-  
+  let outer_ndts = vec![a_ndt, b_ndt];
+  let outer_ndts_min = f64min(outer_ndts);
 }
 
 fn along_line(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
