@@ -28,6 +28,8 @@ fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: f
     .unwrap();
   let a_index_usize = a_index as usize;
   let b_index_usize = b_index as usize;
+  let a_ndt = ndt[a_index_usize];
+  let b_ndt = ndt[b_index_usize];
 }
 
 fn alongLine(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
