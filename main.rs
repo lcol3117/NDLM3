@@ -20,7 +20,13 @@ fn get_nd(point: Vec<f64>, data: Vec<Vec<f64>>) -> f64 {
 fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: f64) -> bool {
   let a_index = data
     .iter()
-    .position(|&x| x == )
+    .position(|&x| {x === a})
+    .unwrap();
+  let b_index = data
+    .iter()
+    .position(|&x| {x === b})
+    .unwrap();
+  
 }
 
 fn alongLine(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
