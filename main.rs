@@ -1,8 +1,3 @@
-extern crate zipWith;
-
-use zipWith::IntoZipWith;
-use std::iter::Iterator;
-
 fn main() {
   println!("Hello World!");
 }
@@ -15,45 +10,50 @@ fn build_nd_transform(data: Vec<Vec<f64>>) -> Vec<f64> {
 }
 
 fn get_nd(point: Vec<f64>, data: Vec<Vec<f64>>) -> f64 {
-  let options: Vec<f64> = data
+  let options = data
     .iter()
     .map(|x| {l2d_not_self(x,point)})
     .collect::<Vec<f64>>();
-    f64min(options)
+  f64min(options)
 }
 
 fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: f64) -> bool {
-  let regionpts: Vec<Vec<f64>> = data
+  let a_index = data
     .iter()
-    .filter(|&x| {in_region(&a,&b,eta,(*x).clone().to_vec())})
-    .collect::<Vec<&Vec<f64>>>()
-    .iter()
-    .map(|&x| {*x})
-    .collect::<Vec<Vec<f64>>>();
-  let acceptpts: Vec<Vec<f64>> = &regionpts
-    .iter()
-    .filter(|&x| {crossing_density(&a,&b,&ndt,&data,(*x).clone().to_vec())})
-    .collect::<Vec<&Vec<f64>>>()
-    .iter()
-    .map(|&x| {*x})
-    .collect::<Vec<Vec<f64>>>();
-  acceptpts.len() >= regionpts.len() / 3
+    .position(|&x| x == )
 }
 
-fn in_region(slice_a: &Vec<f64>, slice_b: &Vec<f64>, eta: f64, point: Vec<f64>) -> bool {
-  let a: Vec<f64> = slice_a.clone().to_vec()
-  let b: Vec<f64> = slice_b.clone().to_vec()
-  let in_dim_list: Vec<bool> = (0..point.len())
+fn alongLine(a: Vec<f64>, b: Vec<f64>, how_far: f64): Vec<f64> {
+  let r = 0..a.length()
     .iter()
-    .map(|x| {(a[x] < point[x]) && (point[x] < b[x])})
-    .collect::<Vec<bool>>();
-  let within_dims: bool = in_dim_list
+    .map(|x| {x as usize})
+    .collect::<Vec<usize>>();
+  let total_deltas = r
     .iter()
-    .fold(|a,x| {a && *x})
+    .map(|x| {b[x] - a[x]})
+    .collect::<Vec<f64>>();
+  let new_deltas = total_deltas
+    .iter()
+    .map(|x| {x * how_far})
+    .collect::<Vec<f64>>();
+  r
+    .iter()
+    .map(|x| {a[x] + new_deltas[x]})
+    .collect::<Vec<f64>>()
+}
+
+fn medianLeft(l: Vec<f64>): Vec<f64> {
+  let sorted = l
+    .iter()
+    .sorted()
+    .collect::<Vec<f64>>();
+  let index = ((l.len() - 1) / 2).floor();
+  let index_usize = index as usize;
+  sorted[index_usize]
 }
 
 fn l2d_not_self(a: Vec<f64>, b: Vec<f64>) -> f64 {
-  let orig_l2dist: f64 = l2d(a,b)
+  let orig_l2dist = l2d(a,b)
   if orig_l2dist === 0_f64 {
     std::f64::INFINITY
   } else {
@@ -65,7 +65,7 @@ fn l2d(a: Vec<f64>, b: Vec<f64>) -> f64 {
   let z = a
     .iter()
     .zip(b.iter());
-  let dist_sum: f64 = z
+  let dist_sum = z
     .into_iter()
     .collect::<Vec<(&f64,&f64)>>()
     .iter()
@@ -85,10 +85,4 @@ fn f64min(l: Vec<f64>) -> f64 {
     .iter()
     .cloned()
     .fold(0./0., f64::min)
-}
-
-fn median(l: Vec<f64>) -> f64 {
-  let index_f64 = l.len() / 2;
-  let index: usize = index_f64 as usize;
-  l[index]
 }
