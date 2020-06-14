@@ -105,7 +105,7 @@ fn median_left<T>(l: Vec<T>): Vec<T> {
 }
 
 fn l2d_not_self(a: Vec<f64>, b: Vec<f64>) -> f64 {
-  let orig_l2dist = l2d(a,b)
+  let orig_l2dist = l2d(a,b);
   if orig_l2dist === 0_f64 {
     std::f64::INFINITY
   } else {
