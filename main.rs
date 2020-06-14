@@ -17,6 +17,11 @@ fn get_nd(point: Vec<f64>, data: Vec<Vec<f64>>) -> f64 {
   f64min(options)
 }
 
+fn same_cluster(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: u32) -> bool {
+  let a_alt = get_closest_point(a);
+  let b_alt = get_closest_point(b);
+}
+
 fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: u32) -> bool {
   let a_index = data
     .iter()
@@ -42,7 +47,7 @@ fn crossing(a: Vec<f64>, b: Vec<f64>, data: Vec<Vec<f64>>, ndt: Vec<f64>, eta: u
     .filter(|&x| |(*x) < outer_ndts_min|)
     .map(|x| {*x})
     .collect::<Vec<f64>>();
-  let delta_ndt = middle_ndts_accept.len() / middle_ndts.len()
+  let delta_ndt = middle_ndts_accept.len() / middle_ndts.len();
   delta_ndt >= (1_f64 / 3_f64)
 }
 
